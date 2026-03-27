@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="bn">
+  <!--
+	  Website: Brick, Mortar & Plaster Calculator
+	  Author: Mamun Hossen
+	  Copyright © 2026 Mamun Hossen. All rights reserved.
+	  GitHub: https://github.com/mamunhossen-dev
+	-->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brick, Mortar & Plaster Calculator</title>
+    <style>
+        :root {
+            --primary: #1e293b;
+            --secondary: #f59e0b;
+            --bg: #f8fafc;
+            --card: #ffffff;
+            --text: #334155;
+            --input-border: #cbd5e1;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .card {
+            background: var(--card);
+            padding: 30px;
+            width: 100%;
+            max-width: 650px;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
+        }
+
+        h2 {
+            text-align: center;
+            color: var(--primary);
+            font-size: 24px;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-bottom: 3px solid var(--secondary);
+            display: inline-block;
+            padding-bottom: 5px;
+            width: 100%;
+        }
+
+        h3 {
+            font-size: 18px;
+            color: var(--primary);
+            margin-top: 20px;
+            border-left: 4px solid var(--secondary);
+            padding-left: 10px;
+            background: #fffbeb;
+            padding-top: 5px;
+            padding-bottom: 5px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .full {
+            grid-column: span 2;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: #64748b;
+        }
+
+        input {
+            padding: 12px;
+            border: 1px solid var(--input-border);
+            border-radius: 8px;
+            font-size: 15px;
+            transition: all 0.3s ease;
+            outline: none;
+        }
+
+        input:focus {
+            border-color: var(--secondary);
+            box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.1);
+        }
+
+        button {
+            margin-top: 25px;
+            padding: 15px;
+            width: 100%;
+            background: var(--primary);
+            border: none;
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background: #0f172a;
+        }
+
+        .result {
+            margin-top: 30px;
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 12px;
+            border: 2px solid #f1f5f9;
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .result p {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #f1f5f9;
+            margin: 0;
+        }
+
+        .result b {
+            color: #1e293b;
+            font-size: 16px;
+        }
+
+        .total-box {
+            background: var(--secondary);
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+        }
+
+        .total-box p {
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+            color: white;
+        }
+
+        .total-box b {
+            color: white;
+        }
+
+        @media (max-width: 480px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+            .full {
+                grid-column: span 1;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <h2>Material Estimator</h2>
+
+    <div class="grid">
+        <div class="full input-group">
+            <label>Wall Length (ft)</label>
+            <input type="number" id="L" value="30">
+        </div>
+
+        <div class="input-group">
+            <label>Height (ft)</label>
+            <input type="number" id="H" value="9">
+        </div>
+
+        <div class="input-group">
+            <label>Wall Thickness (inch)</label>
+            <input type="number" id="T" value="5">
+        </div>
+
+        <div class="full input-group">
+            <label>Door/Window Area (sft)</label>
+            <input type="number" id="openArea" value="0">
+        </div>
+
+        <div class="input-group">
+            <label>Outside Plaster (inch)</label>
+            <input type="number" id="pOut" value="0.75">
+        </div>
+
+        <div class="input-group">
+            <label>Inside Plaster (inch)</label>
+            <input type="number" id="pIn" value="0.5">
+        </div>
+
+        <div class="input-group">
+            <label>Cement Ratio</label>
+            <input type="number" id="rC" value="1">
+        </div>
+
+        <div class="input-group">
+            <label>Sand Ratio</label>
+            <input type="number" id="rS" value="4">
+        </div>
+    </div>
+
+    <button onclick="calc()">Calculate Estimation</button>
+
+    <div class="result" id="output">
+        <h3>General Info</h3>
+        <p>Net Wall Area: <b id="area"></b> sft</p>
+        <p>Brick Volume: <b id="vol"></b> cft</p>
+        <p>Bricks Required: <b id="bricks"></b> nos</p>
+
+        <h3>Brickwork Mortar</h3>
+        <p>Cement: <b id="bCement"></b> bags</p>
+        <p>Sand: <b id="bSand"></b> cft</p>
+
+        <h3>Plaster Mortar</h3>
+        <p>Cement: <b id="pCement"></b> bags</p>
+        <p>Sand: <b id="pSand"></b> cft</p>
+
+        <div class="total-box">
+            <p style="font-weight: bold; border:none; font-size: 18px;">Total Materials Required</p>
+            <p>Total Cement: <b id="tCement"></b> bags</p>
+            <p>Total Sand: <b id="tSand"></b> cft</p>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Logic remains exactly as you provided
+    function calc(){
+        let L = parseFloat(document.getElementById("L").value);
+        let H = parseFloat(document.getElementById("H").value);
+        let T = parseFloat(document.getElementById("T").value)/12;
+        let openArea = parseFloat(document.getElementById("openArea").value);
+        let pOut = parseFloat(document.getElementById("pOut").value)/12;
+        let pIn = parseFloat(document.getElementById("pIn").value)/12;
+        let rC = parseFloat(document.getElementById("rC").value);
+        let rS = parseFloat(document.getElementById("rS").value);
+
+        let netArea = (L*H) - openArea;
+        let brickVol = netArea * T;
+        let bricks = Math.ceil(brickVol * 5);
+
+        let brickDry = brickVol * 0.30 * 1.33;
+        let plasterVol = netArea * (pOut + pIn);
+        let plasterDry = plasterVol * 1.33;
+        let ratioSum = rC + rS;
+
+        let bCement = (brickDry * rC) / ratioSum;
+        let bSand = (brickDry * rS) / ratioSum;
+        let pCement = (plasterDry * rC) / ratioSum;
+        let pSand = (plasterDry * rS) / ratioSum;
+
+        let bCementBag = bCement / 1.25;
+        let pCementBag = pCement / 1.25;
+        let totalCement = bCementBag + pCementBag;
+        let totalSand = bSand + pSand;
+
+        document.getElementById("area").innerText = netArea.toFixed(2);
+        document.getElementById("vol").innerText = brickVol.toFixed(2);
+        document.getElementById("bricks").innerText = bricks.toLocaleString();
+        document.getElementById("bCement").innerText = bCementBag.toFixed(2);
+        document.getElementById("bSand").innerText = bSand.toFixed(2);
+        document.getElementById("pCement").innerText = pCementBag.toFixed(2);
+        document.getElementById("pSand").innerText = pSand.toFixed(2);
+        document.getElementById("tCement").innerText = totalCement.toFixed(2);
+        document.getElementById("tSand").innerText = totalSand.toFixed(2);
+
+        document.getElementById("output").style.display = "block";
+    }
+</script>
+
+</body>
+</html>
