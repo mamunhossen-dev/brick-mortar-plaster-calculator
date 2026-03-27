@@ -176,6 +176,18 @@
             .full { grid-column: span 1; }
             .card { padding: 20px; }
         }
+			.footer a {
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.2s ease;
+}
+
+.footer a:hover {
+    color: var(--primary-hover);
+    text-decoration: underline;
+}
+		
     </style>
 </head>
 <body>
@@ -286,6 +298,9 @@
         window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
     }
 </script>
+<div class="footer">
+    &copy; 2026 Material Estimator. <a href="https://github.com/mamunhossen-dev" target="_blank" rel="noopener noreferrer">View More Tools</a>.
+</div>
 
 </body>
 </html>
