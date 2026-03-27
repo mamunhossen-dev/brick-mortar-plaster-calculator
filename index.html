@@ -238,7 +238,8 @@
 
         <div class="total-box">
             <p style="font-weight: bold; border:none; font-size: 18px;">Total Materials Required</p>
-            <p>Total Cement: <b id="tCement"></b> bags</p>
+            <p>Total Bricks: <b id="bricks"></b> Nos</p>
+			<p>Total Cement: <b id="tCement"></b> bags</p>
             <p>Total Sand: <b id="tSand"></b> cft</p>
         </div>
     </div>
@@ -290,7 +291,6 @@ function calc(){
     let pCementBag = pCement / 1.25;
 
     // Total materials
-	let bricks = Math.ceil(brickVol / singleBrickCFT);
     let totalCement = bCementBag + pCementBag;
     let totalSand = bSand + pSand;
 
