@@ -245,48 +245,68 @@
 </div>
 
 <script>
-    // Logic remains exactly as you provided
-    function calc(){
-        let L = parseFloat(document.getElementById("L").value);
-        let H = parseFloat(document.getElementById("H").value);
-        let T = parseFloat(document.getElementById("T").value)/12;
-        let openArea = parseFloat(document.getElementById("openArea").value);
-        let pOut = parseFloat(document.getElementById("pOut").value)/12;
-        let pIn = parseFloat(document.getElementById("pIn").value)/12;
-        let rC = parseFloat(document.getElementById("rC").value);
-        let rS = parseFloat(document.getElementById("rS").value);
+function calc(){
+    // Input values
+    let L = parseFloat(document.getElementById("L").value);       // Wall length (ft)
+    let H = parseFloat(document.getElementById("H").value);       // Wall height (ft)
+    let T = parseFloat(document.getElementById("T").value)/12;    // Wall thickness in ft
+    let openArea = parseFloat(document.getElementById("openArea").value); // Door/Window area
+    let pOut = parseFloat(document.getElementById("pOut").value)/12; // Outside plaster (ft)
+    let pIn = parseFloat(document.getElementById("pIn").value)/12;   // Inside plaster (ft)
+    let rC = parseFloat(document.getElementById("rC").value);     // Cement ratio
+    let rS = parseFloat(document.getElementById("rS").value);     // Sand ratio
 
-        let netArea = (L*H) - openArea;
-        let brickVol = netArea * T;
-        let bricks = Math.ceil(brickVol * 5);
+    // 1️⃣ Net wall area
+    let netArea = (L * H) - openArea; // sft
 
-        let brickDry = brickVol * 0.30 * 1.33;
-        let plasterVol = netArea * (pOut + pIn);
-        let plasterDry = plasterVol * 1.33;
-        let ratioSum = rC + rS;
+    // 2️⃣ Wall volume in cubic feet
+    let brickVol = netArea * T; // cft
 
-        let bCement = (brickDry * rC) / ratioSum;
-        let bSand = (brickDry * rS) / ratioSum;
-        let pCement = (plasterDry * rC) / ratioSum;
-        let pSand = (plasterDry * rS) / ratioSum;
+    // 3️⃣ Single brick volume in cft (10"x5"x3")
+    let singleBrickCFT = (10 * 5 * 3) / 1728; // cft
 
-        let bCementBag = bCement / 1.25;
-        let pCementBag = pCement / 1.25;
-        let totalCement = bCementBag + pCementBag;
-        let totalSand = bSand + pSand;
+    // 4️⃣ Total bricks required
+    let bricks = Math.ceil(brickVol / singleBrickCFT);
 
-        document.getElementById("area").innerText = netArea.toFixed(2);
-        document.getElementById("vol").innerText = brickVol.toFixed(2);
-        document.getElementById("bricks").innerText = bricks.toLocaleString();
-        document.getElementById("bCement").innerText = bCementBag.toFixed(2);
-        document.getElementById("bSand").innerText = bSand.toFixed(2);
-        document.getElementById("pCement").innerText = pCementBag.toFixed(2);
-        document.getElementById("pSand").innerText = pSand.toFixed(2);
-        document.getElementById("tCement").innerText = totalCement.toFixed(2);
-        document.getElementById("tSand").innerText = totalSand.toFixed(2);
+    // 5️⃣ Mortar for brickwork (30% of brick volume + 33% wastage)
+    let brickDry = brickVol * 0.30 * 1.33;
 
-        document.getElementById("output").style.display = "block";
-    }
+    // 6️⃣ Plaster volume (inside + outside)
+    let plasterVol = netArea * (pOut + pIn);
+    let plasterDry = plasterVol * 1.33; // include wastage
+
+    let ratioSum = rC + rS;
+
+    // 7️⃣ Cement and sand for brickwork
+    let bCement = (brickDry * rC) / ratioSum; // cft
+    let bSand = (brickDry * rS) / ratioSum;   // cft
+
+    // 8️⃣ Cement and sand for plaster
+    let pCement = (plasterDry * rC) / ratioSum; // cft
+    let pSand = (plasterDry * rS) / ratioSum;   // cft
+
+    // 9️⃣ Convert cement from cft to bags (1 bag = 1.25 cft)
+    let bCementBag = bCement / 1.25;
+    let pCementBag = pCement / 1.25;
+
+    // 10️⃣ Total materials
+    let totalCement = bCementBag + pCementBag;
+    let totalSand = bSand + pSand;
+
+    // 11️⃣ Display results
+    document.getElementById("area").innerText = netArea.toFixed(2);
+    document.getElementById("vol").innerText = brickVol.toFixed(2);
+    document.getElementById("bricks").innerText = bricks.toLocaleString();
+    document.getElementById("bCement").innerText = bCementBag.toFixed(2);
+    document.getElementById("bSand").innerText = bSand.toFixed(2);
+    document.getElementById("pCement").innerText = pCementBag.toFixed(2);
+    document.getElementById("pSand").innerText = pSand.toFixed(2);
+    document.getElementById("tCement").innerText = totalCement.toFixed(2);
+    document.getElementById("tSand").innerText = totalSand.toFixed(2);
+
+    // Show the result section
+    document.getElementById("output").style.display = "block";
+}
 </script>
 
 </body>
