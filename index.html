@@ -256,44 +256,45 @@ function calc(){
     let rC = parseFloat(document.getElementById("rC").value);     // Cement ratio
     let rS = parseFloat(document.getElementById("rS").value);     // Sand ratio
 
-    // 1️⃣ Net wall area
+    // Net wall area
     let netArea = (L * H) - openArea; // sft
 
-    // 2️⃣ Wall volume in cubic feet
+    // Wall volume in cubic feet
     let brickVol = netArea * T; // cft
 
-    // 3️⃣ Single brick volume in cft (10"x5"x3")
+    // Single brick volume in cft (10"x5"x3")
     let singleBrickCFT = (10 * 5 * 3) / 1728; // cft
 
-    // 4️⃣ Total bricks required
+    // Total bricks required
     let bricks = Math.ceil(brickVol / singleBrickCFT);
 
-    // 5️⃣ Mortar for brickwork (30% of brick volume + 33% wastage)
+    // Mortar for brickwork (30% of brick volume + 33% wastage)
     let brickDry = brickVol * 0.30 * 1.33;
 
-    // 6️⃣ Plaster volume (inside + outside)
+    // Plaster volume (inside + outside)
     let plasterVol = netArea * (pOut + pIn);
     let plasterDry = plasterVol * 1.33; // include wastage
 
     let ratioSum = rC + rS;
 
-    // 7️⃣ Cement and sand for brickwork
+    // Cement and sand for brickwork
     let bCement = (brickDry * rC) / ratioSum; // cft
     let bSand = (brickDry * rS) / ratioSum;   // cft
 
-    // 8️⃣ Cement and sand for plaster
+    // Cement and sand for plaster
     let pCement = (plasterDry * rC) / ratioSum; // cft
     let pSand = (plasterDry * rS) / ratioSum;   // cft
 
-    // 9️⃣ Convert cement from cft to bags (1 bag = 1.25 cft)
+    // Convert cement from cft to bags (1 bag = 1.25 cft)
     let bCementBag = bCement / 1.25;
     let pCementBag = pCement / 1.25;
 
-    // 10️⃣ Total materials
+    // Total materials
+	let bricks = Math.ceil(brickVol / singleBrickCFT);
     let totalCement = bCementBag + pCementBag;
     let totalSand = bSand + pSand;
 
-    // 11️⃣ Display results
+    // Display results
     document.getElementById("area").innerText = netArea.toFixed(2);
     document.getElementById("vol").innerText = brickVol.toFixed(2);
     document.getElementById("bricks").innerText = bricks.toLocaleString();
