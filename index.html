@@ -176,18 +176,41 @@
             .full { grid-column: span 1; }
             .card { padding: 20px; }
         }
-			.footer a {
+		body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background-color: var(--bg);
+    color: var(--text-main);
+    line-height: 1.5;
+    display: flex;
+    flex-direction: column; /* This stacks card and footer vertically */
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 40px 15px; /* Added more top/bottom padding for breathing room */
+}
+
+/* Updated Footer Styling */
+.footer {
+    margin-top: 30px;
+    margin-bottom: 20px;
+    text-align: center;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    width: 100%;
+}
+
+.footer a {
     color: var(--primary);
     text-decoration: none;
     font-weight: 600;
-    transition: color 0.2s ease;
+    transition: all 0.2s ease;
 }
 
 .footer a:hover {
     color: var(--primary-hover);
     text-decoration: underline;
 }
-		
+
     </style>
 </head>
 <body>
