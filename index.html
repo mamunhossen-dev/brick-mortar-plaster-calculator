@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="bn">
-  <!--
+	<!--
 	  Website: Brick, Mortar & Plaster Calculator
 	  Author: Mamun Hossen
 	  Copyright © 2026 Mamun Hossen. All rights reserved.
@@ -9,123 +9,129 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Brick, Mortar & Plaster Calculator</title>
+    <title>Pro Material Estimator</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
     <style>
         :root {
-            --primary: #1e293b;
+            --primary: #2563eb;
+            --primary-hover: #1d4ed8;
             --secondary: #f59e0b;
-            --bg: #f8fafc;
+            --bg: #f1f5f9;
             --card: #ffffff;
-            --text: #334155;
-            --input-border: #cbd5e1;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --input-border: #e2e8f0;
+            --radius: 10px;
+            --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
 
         body {
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            font-family: 'Inter', -apple-system, sans-serif;
             background-color: var(--bg);
-            color: var(--text);
-            margin: 0;
-            padding: 20px;
+            color: var(--text-main);
+            line-height: 1.5;
             display: flex;
             justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 15px;
         }
 
         .card {
             background: var(--card);
             padding: 30px;
+            max-width: 600px;
             width: 100%;
-            max-width: 650px;
-            border-radius: 16px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
-            border: 1px solid #e2e8f0;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
         }
 
         h2 {
+            font-weight: 700;
+            margin-bottom: 20px;
             text-align: center;
             color: var(--primary);
-            font-size: 24px;
-            margin-bottom: 30px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            border-bottom: 3px solid var(--secondary);
-            display: inline-block;
-            padding-bottom: 5px;
-            width: 100%;
+            font-size: 1.5rem;
         }
 
         h3 {
-            font-size: 18px;
-            color: var(--primary);
-            margin-top: 20px;
-            border-left: 4px solid var(--secondary);
-            padding-left: 10px;
-            background: #fffbeb;
-            padding-top: 5px;
+            font-size: 1rem;
+            margin: 20px 0 10px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            border-bottom: 2px solid var(--bg);
             padding-bottom: 5px;
         }
 
+        /* Responsive Grid */
         .grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
         }
 
-        .full {
-            grid-column: span 2;
-        }
+        .full { grid-column: span 2; }
 
-        .input-group {
+        /* Input Styles */
+        .form-group {
             display: flex;
             flex-direction: column;
         }
 
         label {
-            font-size: 14px;
-            font-weight: 600;
+            font-size: 0.85rem;
+            font-weight: 500;
             margin-bottom: 6px;
-            color: #64748b;
+            color: var(--text-main);
         }
 
         input {
             padding: 12px;
-            border: 1px solid var(--input-border);
             border-radius: 8px;
-            font-size: 15px;
-            transition: all 0.3s ease;
-            outline: none;
+            border: 1px solid var(--input-border);
+            font-size: 1rem;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            background: #fff;
         }
 
         input:focus {
-            border-color: var(--secondary);
-            box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.1);
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
         }
 
+        /* Button Styling */
         button {
-            margin-top: 25px;
-            padding: 15px;
+            margin-top: 24px;
+            padding: 14px;
             width: 100%;
             background: var(--primary);
-            border: none;
             color: white;
-            font-size: 18px;
-            font-weight: bold;
+            border: none;
             border-radius: 8px;
+            font-weight: 600;
+            font-size: 1rem;
             cursor: pointer;
-            transition: background 0.3s;
+            transition: background 0.2s;
         }
 
         button:hover {
-            background: #0f172a;
+            background: var(--primary-hover);
         }
 
+        /* Results Section */
         .result {
-            margin-top: 30px;
-            background: #ffffff;
-            padding: 20px;
-            border-radius: 12px;
-            border: 2px solid #f1f5f9;
+            margin-top: 25px;
             display: none;
-            animation: fadeIn 0.5s ease;
+            animation: fadeIn 0.4s ease-out;
         }
 
         @keyframes fadeIn {
@@ -138,38 +144,37 @@
             justify-content: space-between;
             padding: 8px 0;
             border-bottom: 1px solid #f1f5f9;
-            margin: 0;
         }
 
         .result b {
-            color: #1e293b;
-            font-size: 16px;
+            color: var(--primary);
         }
 
+        /* Summary Box */
         .total-box {
-            background: var(--secondary);
-            color: white;
-            padding: 15px;
-            border-radius: 8px;
-            margin-top: 15px;
+            background: #1e293b;
+            color: #ffffff;
+            padding: 20px;
+            border-radius: var(--radius);
+            margin-top: 20px;
         }
 
         .total-box p {
-            border-bottom: 1px solid rgba(255,255,255,0.2);
-            color: white;
+            border-bottom: 1px solid #334155;
         }
+
+        .total-box p:last-child { border: none; }
 
         .total-box b {
-            color: white;
+            color: var(--secondary);
+            font-size: 1.1rem;
         }
 
+        /* Mobile Adjustments */
         @media (max-width: 480px) {
-            .grid {
-                grid-template-columns: 1fr;
-            }
-            .full {
-                grid-column: span 1;
-            }
+            .grid { grid-template-columns: 1fr; }
+            .full { grid-column: span 1; }
+            .card { padding: 20px; }
         }
     </style>
 </head>
@@ -179,42 +184,42 @@
     <h2>Material Estimator</h2>
 
     <div class="grid">
-        <div class="full input-group">
+        <div class="form-group full">
             <label>Wall Length (ft)</label>
             <input type="number" id="L" value="30">
         </div>
 
-        <div class="input-group">
+        <div class="form-group">
             <label>Height (ft)</label>
             <input type="number" id="H" value="9">
         </div>
 
-        <div class="input-group">
+        <div class="form-group">
             <label>Wall Thickness (inch)</label>
             <input type="number" id="T" value="5">
         </div>
 
-        <div class="full input-group">
-            <label>Door/Window Area (sft)</label>
+        <div class="form-group full">
+            <label>Door/Window Area (sq. ft)</label>
             <input type="number" id="openArea" value="0">
         </div>
 
-        <div class="input-group">
+        <div class="form-group">
             <label>Outside Plaster (inch)</label>
             <input type="number" id="pOut" value="0.75">
         </div>
 
-        <div class="input-group">
+        <div class="form-group">
             <label>Inside Plaster (inch)</label>
             <input type="number" id="pIn" value="0.5">
         </div>
 
-        <div class="input-group">
+        <div class="form-group">
             <label>Cement Ratio</label>
             <input type="number" id="rC" value="1">
         </div>
 
-        <div class="input-group">
+        <div class="form-group">
             <label>Sand Ratio</label>
             <input type="number" id="rS" value="4">
         </div>
@@ -223,91 +228,63 @@
     <button onclick="calc()">Calculate Estimation</button>
 
     <div class="result" id="output">
-        <h3>General Info</h3>
-        <p>Net Wall Area: <b id="area"></b> sft</p>
-        <p>Brick Volume: <b id="vol"></b> cft</p>
-        <p>Bricks Required: <b id="bricks"></b> nos</p>
-
-        <h3>Brickwork Mortar</h3>
-        <p>Cement: <b id="bCement"></b> bags</p>
-        <p>Sand: <b id="bSand"></b> cft</p>
-
-        <h3>Plaster Mortar</h3>
-        <p>Cement: <b id="pCement"></b> bags</p>
-        <p>Sand: <b id="pSand"></b> cft</p>
+        <h3>General Stats</h3>
+        <p>Net Area: <b id="area"></b></p>
+        <p>Total Volume: <b id="vol"></b></p>
+        
+        <h3>Component Breakdown</h3>
+        <p>Bricks: <b id="brickCount"></b></p>
+        <p>Brickwork Cement: <b id="bCement"></b></p>
+        <p>Brickwork Sand: <b id="bSand"></b></p>
+        <p>Plaster Cement: <b id="pCement"></b></p>
+        <p>Plaster Sand: <b id="pSand"></b></p>
 
         <div class="total-box">
-            <p style="font-weight: bold; border:none; font-size: 18px;">Total Materials Required</p>
-            <p>Total Bricks: <b id="bricks"></b> Nos</p>
-			<p>Total Cement: <b id="tCement"></b> bags</p>
-            <p>Total Sand: <b id="tSand"></b> cft</p>
+            <p>Total Bricks: <b id="totalBricks"></b></p>
+            <p>Total Cement: <b id="tCement"></b></p>
+            <p>Total Sand: <b id="tSand"></b></p>
         </div>
     </div>
 </div>
 
 <script>
-function calc(){
-    // Input values
-    let L = parseFloat(document.getElementById("L").value);       // Wall length (ft)
-    let H = parseFloat(document.getElementById("H").value);       // Wall height (ft)
-    let T = parseFloat(document.getElementById("T").value)/12;    // Wall thickness in ft
-    let openArea = parseFloat(document.getElementById("openArea").value); // Door/Window area
-    let pOut = parseFloat(document.getElementById("pOut").value)/12; // Outside plaster (ft)
-    let pIn = parseFloat(document.getElementById("pIn").value)/12;   // Inside plaster (ft)
-    let rC = parseFloat(document.getElementById("rC").value);     // Cement ratio
-    let rS = parseFloat(document.getElementById("rS").value);     // Sand ratio
+    // Keep your existing calc() function logic here, it works perfectly.
+    function getVal(id){ return parseFloat(document.getElementById(id).value) || 0; }
+    function calc(){
+        let L = getVal("L"), H = getVal("H"), T = getVal("T") / 12;
+        let openArea = getVal("openArea"), pOut = getVal("pOut") / 12, pIn = getVal("pIn") / 12;
+        let rC = getVal("rC"), rS = getVal("rS");
 
-    // Net wall area
-    let netArea = (L * H) - openArea; // sft
+        let netArea = (L * H) - openArea;
+        let brickVol = netArea * T;
+        let singleBrick = (10 * 5 * 3) / 1728; // Standard brick size + mortar
+        let bricks = Math.ceil(brickVol / singleBrick);
 
-    // Wall volume in cubic feet
-    let brickVol = netArea * T; // cft
+        let brickDry = brickVol * 0.30 * 1.33;
+        let plasterVol = netArea * (pOut + pIn);
+        let plasterDry = plasterVol * 1.33;
 
-    // Single brick volume in cft (10"x5"x3")
-    let singleBrickCFT = (10 * 5 * 3) / 1728; // cft
+        let ratio = rC + rS;
+        let bCementBag = ((brickDry * rC) / ratio) / 1.25;
+        let bSand = (brickDry * rS) / ratio;
+        let pCementBag = ((plasterDry * rC) / ratio) / 1.25;
+        let pSand = (plasterDry * rS) / ratio;
 
-    // Total bricks required
-    let bricks = Math.ceil(brickVol / singleBrickCFT);
+        document.getElementById("area").innerText = netArea.toFixed(2) + " sft";
+        document.getElementById("vol").innerText = brickVol.toFixed(2) + " cft";
+        document.getElementById("brickCount").innerText = bricks.toLocaleString() + " pcs";
+        document.getElementById("bCement").innerText = bCementBag.toFixed(2) + " bags";
+        document.getElementById("bSand").innerText = bSand.toFixed(2) + " cft";
+        document.getElementById("pCement").innerText = pCementBag.toFixed(2) + " bags";
+        document.getElementById("pSand").innerText = pSand.toFixed(2) + " cft";
 
-    // Mortar for brickwork (30% of brick volume + 33% wastage)
-    let brickDry = brickVol * 0.30 * 1.33;
+        document.getElementById("totalBricks").innerText = bricks.toLocaleString() + " pcs";
+        document.getElementById("tCement").innerText = (bCementBag + pCementBag).toFixed(2) + " bags";
+        document.getElementById("tSand").innerText = (bSand + pSand).toFixed(2) + " cft";
 
-    // Plaster volume (inside + outside)
-    let plasterVol = netArea * (pOut + pIn);
-    let plasterDry = plasterVol * 1.33; // include wastage
-
-    let ratioSum = rC + rS;
-
-    // Cement and sand for brickwork
-    let bCement = (brickDry * rC) / ratioSum; // cft
-    let bSand = (brickDry * rS) / ratioSum;   // cft
-
-    // Cement and sand for plaster
-    let pCement = (plasterDry * rC) / ratioSum; // cft
-    let pSand = (plasterDry * rS) / ratioSum;   // cft
-
-    // Convert cement from cft to bags (1 bag = 1.25 cft)
-    let bCementBag = bCement / 1.25;
-    let pCementBag = pCement / 1.25;
-
-    // Total materials
-    let totalCement = bCementBag + pCementBag;
-    let totalSand = bSand + pSand;
-
-    // Display results
-    document.getElementById("area").innerText = netArea.toFixed(2);
-    document.getElementById("vol").innerText = brickVol.toFixed(2);
-    document.getElementById("bricks").innerText = bricks.toLocaleString();
-    document.getElementById("bCement").innerText = bCementBag.toFixed(2);
-    document.getElementById("bSand").innerText = bSand.toFixed(2);
-    document.getElementById("pCement").innerText = pCementBag.toFixed(2);
-    document.getElementById("pSand").innerText = pSand.toFixed(2);
-    document.getElementById("tCement").innerText = totalCement.toFixed(2);
-    document.getElementById("tSand").innerText = totalSand.toFixed(2);
-
-    // Show the result section
-    document.getElementById("output").style.display = "block";
-}
+        document.getElementById("output").style.display = "block";
+        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+    }
 </script>
 
 </body>
