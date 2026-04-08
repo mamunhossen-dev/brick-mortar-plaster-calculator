@@ -1,298 +1,392 @@
 <!DOCTYPE html>
 <html lang="bn">
-	<!--
-	  Website: Brick, Mortar & Plaster Calculator
-	  Author: Mamun Hossen
-	  Copyright © 2026 Mamun Hossen. All rights reserved.
-	  GitHub: https://github.com/mamunhossen-dev
-	-->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Material Estimator</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-
+    <title>ইট ও মসলা এস্টিমেটর | Brick & Material Estimator</title>
+    
+    <!-- Bangla Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
     <style>
-        :root {
-            --primary: #2563eb;
-            --primary-hover: #1d4ed8;
-            --secondary: #f59e0b;
-            --bg: #f1f5f9;
-            --card: #ffffff;
-            --text-main: #1e293b;
-            --text-muted: #64748b;
-            --input-border: #e2e8f0;
-            --radius: 10px;
-            --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-        }
-
         * {
-            box-sizing: border-box;
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
+            font-family: 'Noto Sans Bengali', sans-serif;
         }
 
         body {
-            font-family: 'Inter', -apple-system, sans-serif;
-            background-color: var(--bg);
-            color: var(--text-main);
-            line-height: 1.5;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            background: linear-gradient(145deg, #0f172a 0%, #1e293b 100%);
             min-height: 100vh;
-            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1300px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 35px;
         }
 
         .card {
-            background: var(--card);
-            padding: 30px;
-            max-width: 600px;
-            width: 100%;
-            border-radius: var(--radius);
-            box-shadow: var(--shadow);
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 32px;
+            padding: 35px 30px;
+            box-shadow: 0 25px 45px -12px rgba(0, 0, 0, 0.35), 0 4px 8px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.25s ease;
         }
 
-        h2 {
-            font-weight: 700;
-            margin-bottom: 20px;
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card-header {
             text-align: center;
-            color: var(--primary);
-            font-size: 1.5rem;
+            margin-bottom: 30px;
         }
 
-        h3 {
-            font-size: 1rem;
-            margin: 20px 0 10px;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            border-bottom: 2px solid var(--bg);
-            padding-bottom: 5px;
+        .card-header h2 {
+            font-size: 28px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #0f172a, #2563eb);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 6px;
+            letter-spacing: -0.01em;
         }
 
-        /* Responsive Grid */
-        .grid {
+        .card-header p {
+            color: #475569;
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        .input-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 16px;
+            gap: 20px 25px;
         }
 
-        .full { grid-column: span 2; }
+        .full-width {
+            grid-column: span 2;
+        }
 
-        /* Input Styles */
-        .form-group {
+        .input-field {
             display: flex;
             flex-direction: column;
+            gap: 8px;
         }
 
-        label {
-            font-size: 0.85rem;
-            font-weight: 500;
-            margin-bottom: 6px;
-            color: var(--text-main);
-        }
-
-        input {
-            padding: 12px;
-            border-radius: 8px;
-            border: 1px solid var(--input-border);
-            font-size: 1rem;
-            transition: border-color 0.2s, box-shadow 0.2s;
-            background: #fff;
-        }
-
-        input:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
-        }
-
-        /* Button Styling */
-        button {
-            margin-top: 24px;
-            padding: 14px;
-            width: 100%;
-            background: var(--primary);
-            color: white;
-            border: none;
-            border-radius: 8px;
+        .input-field label {
             font-weight: 600;
-            font-size: 1rem;
+            color: #1e293b;
+            font-size: 15px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .input-field input {
+            padding: 14px 16px;
+            background: #f8fafc;
+            border: 1.5px solid #e2e8f0;
+            border-radius: 16px;
+            font-size: 16px;
+            font-weight: 500;
+            color: #0f172a;
+            transition: all 0.2s;
+            outline: none;
+            font-family: 'Noto Sans Bengali', sans-serif;
+        }
+
+        .input-field input:focus {
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
+            background: #ffffff;
+        }
+
+        .section-divider {
+            margin: 30px 0 20px;
+            display: flex;
+            align-items: center;
+            color: #2563eb;
+            font-weight: 700;
+            font-size: 18px;
+        }
+
+        .section-divider::before,
+        .section-divider::after {
+            content: "";
+            flex: 1;
+            height: 2px;
+            background: linear-gradient(to right, transparent, #cbd5e1, transparent);
+        }
+
+        .section-divider span {
+            margin: 0 15px;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 16px 20px;
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+            border: none;
+            border-radius: 20px;
+            color: white;
+            font-size: 18px;
+            font-weight: 700;
             cursor: pointer;
-            transition: background 0.2s;
-        }
-
-        button:hover {
-            background: var(--primary-hover);
-        }
-
-        /* Results Section */
-        .result {
+            transition: all 0.2s;
             margin-top: 25px;
+            box-shadow: 0 8px 20px rgba(37, 99, 235, 0.3);
+            font-family: 'Noto Sans Bengali', sans-serif;
+            letter-spacing: 0.3px;
+        }
+
+        .btn:hover {
+            background: linear-gradient(135deg, #1d4ed8, #1e40af);
+            box-shadow: 0 12px 24px rgba(37, 99, 235, 0.4);
+            transform: scale(1.01);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, #0f172a, #1e293b);
+            box-shadow: 0 8px 20px rgba(15, 23, 42, 0.25);
+        }
+
+        .btn-secondary:hover {
+            background: linear-gradient(135deg, #1e293b, #0f172a);
+        }
+
+        .result-panel {
+            margin-top: 30px;
+            padding: 25px;
+            background: #f1f5f9;
+            border-radius: 24px;
             display: none;
-            animation: fadeIn 0.4s ease-out;
+            animation: slideUp 0.4s cubic-bezier(0.2, 0.9, 0.4, 1);
+            border: 1px solid #cbd5e1;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+        @keyframes slideUp {
+            0% { opacity: 0; transform: translateY(15px); }
+            100% { opacity: 1; transform: translateY(0); }
         }
 
-        .result p {
+        .result-row {
             display: flex;
             justify-content: space-between;
-            padding: 8px 0;
-            border-bottom: 1px solid #f1f5f9;
+            padding: 12px 5px;
+            border-bottom: 1px dashed #94a3b8;
+            font-size: 16px;
+            color: #1e293b;
         }
 
-        .result b {
-            color: var(--primary);
+        .result-row:last-child {
+            border-bottom: none;
         }
 
-        /* Summary Box */
-        .total-box {
-            background: #1e293b;
-            color: #ffffff;
+        .result-highlight {
+            margin-top: 15px;
             padding: 20px;
-            border-radius: var(--radius);
-            margin-top: 20px;
+            background: #0f172a;
+            border-radius: 18px;
+            color: white;
         }
 
-        .total-box p {
-            border-bottom: 1px solid #334155;
+        .result-highlight .result-row {
+            color: #e2e8f0;
+            border-bottom-color: #334155;
         }
 
-        .total-box p:last-child { border: none; }
-
-        .total-box b {
-            color: var(--secondary);
-            font-size: 1.1rem;
+        .result-highlight .result-row b {
+            color: #fbbf24;
+            font-size: 1.2em;
         }
 
-        /* Mobile Adjustments */
-        @media (max-width: 480px) {
-            .grid { grid-template-columns: 1fr; }
-            .full { grid-column: span 1; }
-            .card { padding: 20px; }
+        b {
+            font-weight: 700;
         }
-		body {
-    font-family: 'Inter', -apple-system, sans-serif;
-    background-color: var(--bg);
-    color: var(--text-main);
-    line-height: 1.5;
-    display: flex;
-    flex-direction: column; /* This stacks card and footer vertically */
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-    padding: 40px 15px; /* Added more top/bottom padding for breathing room */
-}
 
-/* Updated Footer Styling */
-.footer {
-    margin-top: 30px;
-    margin-bottom: 20px;
-    text-align: center;
-    font-size: 0.9rem;
-    color: var(--text-muted);
-    width: 100%;
-}
+        .footer {
+            margin-top: 40px;
+            color: #94a3b8;
+            font-size: 15px;
+            text-align: center;
+        }
 
-.footer a {
-    color: var(--primary);
-    text-decoration: none;
-    font-weight: 600;
-    transition: all 0.2s ease;
-}
+        .footer a {
+            color: #60a5fa;
+            text-decoration: none;
+            font-weight: 600;
+        }
 
-.footer a:hover {
-    color: var(--primary-hover);
-    text-decoration: underline;
-}
-
+        @media (max-width: 700px) {
+            .input-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            .full-width {
+                grid-column: span 1;
+            }
+            .card {
+                padding: 25px 20px;
+            }
+            .card-header h2 {
+                font-size: 24px;
+            }
+        }
     </style>
 </head>
 <body>
 
-<div class="card">
-    <h2>Material Estimator</h2>
-
-    <div class="grid">
-        <div class="form-group full">
-            <label>Wall Length (ft)</label>
-            <input type="number" id="L" placeholder="Enter total wall length (e.g. 250)">
+<div class="container">
+    
+    <!-- ======================= টুল ১ (উপরে): ম্যাটেরিয়াল এস্টিমেটর ======================= -->
+    <div class="card">
+        <div class="card-header">
+            <h2>🧾 ম্যাটেরিয়াল এস্টিমেটর</h2>
+            <p>দেওয়াল, প্লাস্টার, সিমেন্ট ও বালুর সঠিক হিসাব</p>
         </div>
 
-        <div class="form-group">
-            <label>Height (ft)</label>
-            <input type="number" id="H" placeholder="Enter wall height (e.g. 9.5)">
+        <div class="input-grid">
+            <div class="input-field full-width">
+                <label>📏 দেওয়ালের মোট দৈর্ঘ্য (ফুট)</label>
+                <input type="number" id="L" placeholder="উদাহরণ: 30">
+            </div>
+            <div class="input-field">
+                <label>📐 উচ্চতা (ফুট)</label>
+                <input type="number" id="H" placeholder="উদাহরণ: 9">
+            </div>
+            <div class="input-field">
+                <label>🧱 পুরুত্ব (ইঞ্চি)</label>
+                <input type="number" id="T" placeholder="উদাহরণ: 5">
+            </div>
+            <div class="input-field full-width">
+                <label>🚪 দরজা-জানালার মোট ক্ষেত্রফল (বর্গফুট)</label>
+                <input type="number" id="openArea" placeholder="উদাহরণ: 29">
+            </div>
+            <div class="input-field">
+                <label>🧴 বাহিরের প্লাস্টার (ইঞ্চি)</label>
+                <input type="number" id="pOut" value="0.75" step="0.01">
+            </div>
+            <div class="input-field">
+                <label>🧴 ভেতরের প্লাস্টার (ইঞ্চি)</label>
+                <input type="number" id="pIn" value="0.5" step="0.01">
+            </div>
+            <div class="input-field">
+                <label>🪣 সিমেন্ট অনুপাত</label>
+                <input type="number" id="rC" value="1">
+            </div>
+            <div class="input-field">
+                <label>⏳ বালুর অনুপাত</label>
+                <input type="number" id="rS" value="4">
+            </div>
         </div>
 
-        <div class="form-group">
-            <label>Wall Thickness (inch)</label>
-            <input type="number" id="T" placeholder="Enter wall thikness (e.g. 5)">
-        </div>
+        <!-- 🔧 এখানে onclick="calcMaterial()" ঠিক করে দেওয়া হয়েছে -->
+        <button class="btn" onclick="calcMaterial()">হিসাব করুন</button>
 
-        <div class="form-group full">
-            <label>Total Area of Door/Window (sq. ft)</label>
-            <input type="number" id="openArea" placeholder="Enter total (void) area (e.g. 29)">
-        </div>
+        <div class="result-panel" id="materialResult">
+            <div style="font-weight: 700; margin-bottom: 15px; color: #0f172a; font-size: 18px;">📊 সাধারণ পরিসংখ্যান</div>
+            <div class="result-row"><span>মোট ক্ষেত্রফল (নেট):</span> <b id="area">0 বর্গফুট</b></div>
+            <div class="result-row"><span>মোট আয়তন:</span> <b id="vol">0 ঘনফুট</b></div>
+            
+            <div style="font-weight: 700; margin: 20px 0 15px; color: #0f172a; font-size: 18px;">🧩 উপাদান বিশ্লেষণ</div>
+            <div class="result-row"><span>🧱 ইটের সংখ্যা:</span> <b id="brickCount">0 টি</b></div>
+            <div class="result-row"><span>🪣 ইটের কাজে সিমেন্ট:</span> <b id="bCement">0 ব্যাগ</b></div>
+            <div class="result-row"><span>⏳ ইটের কাজে বালু:</span> <b id="bSand">0 ঘনফুট</b></div>
+            <div class="result-row"><span>🧴 প্লাস্টারে সিমেন্ট:</span> <b id="pCement">0 ব্যাগ</b></div>
+            <div class="result-row"><span>🧴 প্লাস্টারে বালু:</span> <b id="pSand">0 ঘনফুট</b></div>
 
-        <div class="form-group">
-            <label>Outside Plaster (inch)</label>
-            <input type="number" id="pOut" value="0.75">
-        </div>
-
-        <div class="form-group">
-            <label>Inside Plaster (inch)</label>
-            <input type="number" id="pIn" value="0.5">
-        </div>
-
-        <div class="form-group">
-            <label>Cement Ratio</label>
-            <input type="number" id="rC" value="1">
-        </div>
-
-        <div class="form-group">
-            <label>Sand Ratio</label>
-            <input type="number" id="rS" value="4">
+            <div class="result-highlight">
+                <div class="result-row"><span>🧱 মোট ইট:</span> <b id="totalBricks">0 টি</b></div>
+                <div class="result-row"><span>🪣 মোট সিমেন্ট:</span> <b id="tCement">0 ব্যাগ</b></div>
+                <div class="result-row"><span>⏳ মোট বালু:</span> <b id="tSand">0 ঘনফুট</b></div>
+            </div>
         </div>
     </div>
 
-    <button onclick="calc()">Calculate Estimation</button>
+    <!-- ======================= টুল ২ (নিচে): চৌবাচ্চার ইটের এস্টিমেট ======================= -->
+    <div class="card">
+        <div class="card-header">
+            <h2>🧱 চৌবাচ্চার ইটের এস্টিমেট</h2>
+            <p>বৃত্তাকার চৌবাচ্চার গাঁথুনির জন্য ইটের পরিমাণ নির্ণয়</p>
+        </div>
 
-    <div class="result" id="output">
-        <h3>General Stats</h3>
-        <p>Net Area: <b id="area"></b></p>
-        <p>Total Volume: <b id="vol"></b></p>
+        <div class="input-grid">
+            <div class="input-field">
+                <label>⚫ বহিঃস্থ ব্যাস (ফুট)</label>
+                <input type="number" id="outerDia" placeholder="উদাহরণ: 5" step="0.01">
+            </div>
+            <div class="input-field">
+                <label>⚪ অন্তঃস্থ ব্যাস (ফুট)</label>
+                <input type="number" id="innerDia" placeholder="উদাহরণ: 4" step="0.01">
+            </div>
+            <div class="input-field full-width">
+                <label>📏 চৌবাচ্চার উচ্চতা (ফুট)</label>
+                <input type="number" id="height" placeholder="উদাহরণ: 10" step="0.01">
+            </div>
+        </div>
+
+        <div class="section-divider"><span>📐 প্রচলিত ইটের সাইজ (মসলাসহ)</span></div>
         
-        <h3>Component Breakdown</h3>
-        <p>Bricks: <b id="brickCount"></b></p>
-        <p>Brickwork Cement: <b id="bCement"></b></p>
-        <p>Brickwork Sand: <b id="bSand"></b></p>
-        <p>Plaster Cement: <b id="pCement"></b></p>
-        <p>Plaster Sand: <b id="pSand"></b></p>
+        <div class="input-grid">
+            <div class="input-field">
+                <label>📏 দৈর্ঘ্য (ইঞ্চি)</label>
+                <input type="number" id="brickL" value="10" step="0.1">
+            </div>
+            <div class="input-field">
+                <label>📐 প্রস্থ (ইঞ্চি)</label>
+                <input type="number" id="brickW" value="5" step="0.1">
+            </div>
+            <div class="input-field">
+                <label>🧱 পুরুত্ব (ইঞ্চি)</label>
+                <input type="number" id="brickH" value="3" step="0.1">
+            </div>
+        </div>
 
-        <div class="total-box">
-            <p>Total Bricks: <b id="totalBricks"></b></p>
-            <p>Total Cement: <b id="tCement"></b></p>
-            <p>Total Sand: <b id="tSand"></b></p>
+        <button class="btn btn-secondary" onclick="calculateEstimate()">হিসাব করুন</button>
+
+        <div class="result-panel" id="brickResult">
+            <div class="result-row"><span>🧊 মোট আয়তন (গাঁথুনি):</span> <b id="resVolume">0 ঘনফুট</b></div>
+            <div class="result-row"><span>🧱 প্রতিটি ইটের আয়তন:</span> <b id="resBrickVol">0 ঘনফুট</b></div>
+            <div class="result-row" style="font-size: 1.2em; margin-top: 10px;"><span>✅ মোট ইটের প্রয়োজন:</span> <b id="resTotalBricks" style="color:#2563eb;">0 টি</b></div>
         </div>
     </div>
 </div>
 
+<!-- Footer -->
+<div class="footer">
+    © ২০২৬ ইট ও মসলা এস্টিমেটর | ডিজাইন ও ডেভেলপ করেছেন মামুন হোসেন | 
+    <a href="https://github.com/mamunhossen-dev" target="_blank">গিটহাব</a> | সর্বস্বত্ব সংরক্ষিত
+</div>
+
 <script>
-    // Keep your existing calc() function logic here, it works perfectly.
-    function getVal(id){ return parseFloat(document.getElementById(id).value) || 0; }
-    function calc(){
+    // ===================== ম্যাটেরিয়াল এস্টিমেটর ফাংশন =====================
+    function getVal(id) {
+        return parseFloat(document.getElementById(id).value) || 0;
+    }
+
+    function calcMaterial() {
         let L = getVal("L"), H = getVal("H"), T = getVal("T") / 12;
         let openArea = getVal("openArea"), pOut = getVal("pOut") / 12, pIn = getVal("pIn") / 12;
         let rC = getVal("rC"), rS = getVal("rS");
 
+        // Calculate net area and volumes
         let netArea = (L * H) - openArea;
         let brickVol = netArea * T;
-        let singleBrick = (10 * 5 * 3) / 1728; // Standard brick size + mortar
+        let singleBrick = (10 * 5 * 3) / 1728; // cubic feet
         let bricks = Math.ceil(brickVol / singleBrick);
 
         let brickDry = brickVol * 0.30 * 1.33;
@@ -305,25 +399,53 @@
         let pCementBag = ((plasterDry * rC) / ratio) / 1.25;
         let pSand = (plasterDry * rS) / ratio;
 
-        document.getElementById("area").innerText = netArea.toFixed(2) + " sft";
-        document.getElementById("vol").innerText = brickVol.toFixed(2) + " cft";
-        document.getElementById("brickCount").innerText = bricks.toLocaleString() + " Nos";
-        document.getElementById("bCement").innerText = bCementBag.toFixed(2) + " bags";
-        document.getElementById("bSand").innerText = bSand.toFixed(2) + " cft";
-        document.getElementById("pCement").innerText = pCementBag.toFixed(2) + " bags";
-        document.getElementById("pSand").innerText = pSand.toFixed(2) + " cft";
+        // Update UI
+        document.getElementById("area").innerText = netArea.toFixed(2) + " বর্গফুট";
+        document.getElementById("vol").innerText = brickVol.toFixed(2) + " ঘনফুট";
+        document.getElementById("brickCount").innerText = bricks.toLocaleString() + " টি";
+        document.getElementById("bCement").innerText = bCementBag.toFixed(2) + " ব্যাগ";
+        document.getElementById("bSand").innerText = bSand.toFixed(2) + " ঘনফুট";
+        document.getElementById("pCement").innerText = pCementBag.toFixed(2) + " ব্যাগ";
+        document.getElementById("pSand").innerText = pSand.toFixed(2) + " ঘনফুট";
 
-        document.getElementById("totalBricks").innerText = bricks.toLocaleString() + " Nos";
-        document.getElementById("tCement").innerText = (bCementBag + pCementBag).toFixed(2) + " bags";
-        document.getElementById("tSand").innerText = (bSand + pSand).toFixed(2) + " cft";
+        document.getElementById("totalBricks").innerText = bricks.toLocaleString() + " টি";
+        document.getElementById("tCement").innerText = (bCementBag + pCementBag).toFixed(2) + " ব্যাগ";
+        document.getElementById("tSand").innerText = (bSand + pSand).toFixed(2) + " ঘনফুট";
 
-        document.getElementById("output").style.display = "block";
-        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+        // Show result panel
+        document.getElementById("materialResult").style.display = "block";
+    }
+
+    // ===================== চৌবাচ্চার ইট গণনা ফাংশন =====================
+    function calculateEstimate() {
+        let outerDia = parseFloat(document.getElementById('outerDia').value);
+        let innerDia = parseFloat(document.getElementById('innerDia').value);
+        let height = parseFloat(document.getElementById('height').value);
+        let brickL = parseFloat(document.getElementById('brickL').value);
+        let brickW = parseFloat(document.getElementById('brickW').value);
+        let brickH = parseFloat(document.getElementById('brickH').value);
+
+        // Validation
+        if (isNaN(outerDia) || isNaN(innerDia) || isNaN(height) || innerDia >= outerDia) {
+            alert("দয়া করে সঠিক পরিমাপ প্রদান করুন। বহিঃস্থ ব্যাস অবশ্যই অন্তঃস্থ ব্যাসের চেয়ে বড় হতে হবে।");
+            return;
+        }
+
+        let rOuterSqr = Math.pow(outerDia, 2);
+        let rInnerSqr = Math.pow(innerDia, 2);
+        let totalVolume = Math.PI * ((rOuterSqr - rInnerSqr) / 4) * height;
+
+        let brickVolume = (brickL / 12) * (brickW / 12) * (brickH / 12);
+        let totalBricks = Math.round(totalVolume / brickVolume);
+
+        document.getElementById('resVolume').innerText = totalVolume.toFixed(3) + " ঘনফুট";
+        document.getElementById('resBrickVol').innerText = brickVolume.toFixed(5) + " ঘনফুট";
+        document.getElementById('resTotalBricks').innerText = totalBricks.toLocaleString() + " টি";
+        
+        // Show result panel
+        document.getElementById('brickResult').style.display = "block";
     }
 </script>
-<div class="footer">
-    &copy; 2026 Material Estimator. <a href="https://mamunhossen-dev.github.io/tools" target="_blank" rel="noopener noreferrer">View More Tools</a>.
-</div>
 
 </body>
 </html>
